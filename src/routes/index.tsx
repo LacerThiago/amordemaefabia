@@ -31,12 +31,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Bolos recheados, bolos caseiros e docinhos feitos com carinho. Sabor e afeto em cada fatia. Encomendas com no mínimo 24h de antecedência.",
+          "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia.",
       },
       { property: "og:title", content: "Amor de Mãe Fábia — Confeitaria Artesanal" },
       {
         property: "og:description",
-        content: "Sabor e afeto em cada fatia. Cardápio de bolos e doces artesanais.",
+        content: "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
