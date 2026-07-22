@@ -300,7 +300,7 @@ function AdminPage() {
               <Label htmlFor="description">Descrição</Label>
               <Textarea
                 id="description"
-                value={form.description}
+                value={form.description ?? ""}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 placeholder="Ingredientes, tamanho, detalhes..."
                 rows={3}
@@ -311,7 +311,7 @@ function AdminPage() {
               <Input
                 id="image_url"
                 type="url"
-                value={form.image_url}
+                value={form.image_url ?? ""}
                 onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                 placeholder="https://..."
               />
