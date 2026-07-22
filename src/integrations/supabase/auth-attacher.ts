@@ -7,10 +7,7 @@ import { supabase } from './client'
 export const attachSupabaseAuth = createMiddleware({ type: 'function' }).client(
   async ({ next }) => {
     const { data } = await supabase.auth.getSession()
-    let token = data.session?.access_token
-    if (!token && typeof window !== 'undefined' && localStorage.getItem('temp_admin_bypass') === 'true') {
-      token = 'temp_admin_bypass_token'
-    }
+    const token = data.session?.access_token
     return next({
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })

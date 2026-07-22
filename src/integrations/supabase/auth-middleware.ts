@@ -67,16 +67,6 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
       throw new Error('Unauthorized: No token provided');
     }
 
-    if (token === 'temp_admin_bypass_token') {
-      const { supabaseAdmin } = await import('./client.server');
-      return next({
-        context: {
-          supabase: supabaseAdmin as any,
-          userId: 'temp-admin-id',
-          claims: { sub: 'temp-admin-id', email: 'fabiabatistadeoliveira@gmail.com' },
-        },
-      });
-    }
 
     if (token.split('.').length !== 3) {
       throw new Error('Unauthorized: Invalid token');

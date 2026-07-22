@@ -262,8 +262,8 @@ function Footer() {
       <div className="border-t border-[var(--cream)]/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--cream)]/50">
           <p>© {new Date().getFullYear()} Amor de Mãe Fábia · Feito com carinho</p>
-          <a href="/admin" className="hover:text-[var(--cream)] transition-colors">
-            Área da Fábia — editar cardápio
+          <a href="/admin" className="opacity-0 hover:opacity-30 transition-opacity" aria-label="Admin">
+            ♥
           </a>
         </div>
       </div>

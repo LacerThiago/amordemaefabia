@@ -19,25 +19,28 @@ const productUpdateSchema = z.object({
   product: productSchema,
 });
 
-const ADMIN_EMAIL = "fabiabatistadeoliveira@gmail.com";
+/**
+ * Verifica se o usuário tem role 'admin' na tabela user_roles.
+ * Usa o cliente autenticado do usuário — a RLS policy "Users can view their own roles"
+ * garante que só o próprio usuário consegue ler seus papéis.
+ */
+async function ensureAdmin(userId: string, supabase: any) {
+  const { data, error } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
 
-async function ensureAdminRole(userId: string, email: string | undefined) {
-  if (email !== ADMIN_EMAIL && email !== "admin") {
-    throw new Error("Unauthorized: Only the shop owner can manage products");
+  if (error || !data) {
+    throw new Error("Não autorizado: apenas administradores podem gerenciar o cardápio.");
   }
-  if (userId === "temp-admin-id") return;
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("user_roles").upsert(
-    { user_id: userId, role: "admin" },
-    { onConflict: "user_id,role" },
-  );
-  if (error) throw error;
 }
 
 export const getProductsAdmin = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await ensureAdminRole(context.userId, context.claims.email as string | undefined);
+    await ensureAdmin(context.userId, context.supabase);
     const { data, error } = await context.supabase
       .from("products")
       .select("*")
@@ -52,7 +55,7 @@ export const createProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data) => productSchema.parse(data))
   .handler(async ({ data, context }) => {
-    await ensureAdminRole(context.userId, context.claims.email as string | undefined);
+    await ensureAdmin(context.userId, context.supabase);
     const { data: inserted, error } = await context.supabase
       .from("products")
       .insert({
@@ -73,7 +76,7 @@ export const updateProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data) => productUpdateSchema.parse(data))
   .handler(async ({ data, context }) => {
-    await ensureAdminRole(context.userId, context.claims.email as string | undefined);
+    await ensureAdmin(context.userId, context.supabase);
     const { data: updated, error } = await context.supabase
       .from("products")
       .update({
@@ -95,7 +98,7 @@ export const deleteProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data) => productIdSchema.parse(data))
   .handler(async ({ data, context }) => {
-    await ensureAdminRole(context.userId, context.claims.email as string | undefined);
+    await ensureAdmin(context.userId, context.supabase);
     const { error } = await context.supabase.from("products").delete().eq("id", data.id);
     if (error) throw error;
     return { ok: true };

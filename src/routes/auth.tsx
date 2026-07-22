@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
-import { Eye, EyeOff, Heart, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -33,27 +33,22 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
 
-    const cleanEmail = email.trim().toLowerCase();
-    const cleanPassword = password;
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
 
-    const isFabiaAdmin = cleanEmail === "fabiabatistadeoliveira@gmail.com" && cleanPassword === "Bolos@Fabia_";
-    const isAdminShortcut = cleanEmail === "admin" && cleanPassword === "admin";
-
-    if (isFabiaAdmin || isAdminShortcut) {
-      localStorage.setItem("temp_admin_bypass", "true");
-      setLoading(false);
-      toast.success("Bem-vinda de volta, Fábia!");
-      navigate({ to: redirect || "/admin", replace: true });
-      return;
-    }
-
-    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password: cleanPassword });
     setLoading(false);
+
     if (error) {
-      toast.error(error.message === "Invalid login credentials" ? "Email ou senha incorretos." : error.message);
+      toast.error(
+        error.message === "Invalid login credentials"
+          ? "Email ou senha incorretos."
+          : error.message,
+      );
       return;
     }
-    localStorage.setItem("temp_admin_bypass", "true");
+
     toast.success("Bem-vinda de volta!");
     navigate({ to: redirect || "/admin", replace: true });
   };
@@ -61,13 +56,10 @@ function AuthPage() {
   return (
     <div className="min-h-screen bg-[var(--cream)] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-card border border-border rounded-3xl shadow-xl p-6 sm:p-8">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center gap-2 mb-2">
-            <Heart className="h-5 w-5 text-[var(--rose-soft)] fill-[var(--rose-soft)]" />
-            <span className="font-display text-xl text-[var(--chocolate)]">Amor de Mãe Fábia</span>
-          </div>
+        <div className="flex flex-col items-center text-center mb-8">
+          <img src="/logo.png" alt="Amor de Mãe Fábia" className="h-20 w-auto object-contain rounded-2xl mb-3 shadow-sm" />
           <h1 className="font-display text-2xl text-[var(--chocolate)]">Área da confeitaria</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Acesso exclusivo para editar o cardápio.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Acesso exclusivo para editar o cardápio.</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
@@ -75,11 +67,11 @@ function AuthPage() {
             <Label htmlFor="email-login">Email</Label>
             <Input
               id="email-login"
-              type="text"
+              type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="fabiabatistadeoliveira@gmail.com"
+              placeholder="seu@email.com"
             />
           </div>
           <div className="space-y-2">

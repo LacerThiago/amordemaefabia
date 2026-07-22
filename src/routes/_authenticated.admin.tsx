@@ -211,7 +211,7 @@ function AdminPage() {
             <span className="font-display text-lg text-[var(--chocolate)] leading-none hidden sm:inline">Cardápio</span>
           </Link>
           <div className="flex items-center gap-2">
-            <Heart className="h-5 w-5 text-[var(--rose-soft)] fill-[var(--rose-soft)]" />
+            <img src="/logo.png" alt="Amor de Mãe Fábia" className="h-8 w-auto object-contain rounded-lg" />
             <span className="font-display text-lg text-[var(--chocolate)] leading-none">Admin</span>
           </div>
           <Button
