@@ -1,4 +1,4 @@
-const { getConfig } = require('@tanstack/router-generator');
+const { getConfig, Generator } = require('@tanstack/router-generator');
 
 const config = getConfig({
   rootDir: process.cwd(),
@@ -9,8 +9,6 @@ const config = getConfig({
   semicolons: false,
 });
 
-const { Generator } = require('@tanstack/router-generator');
-
 const generator = new Generator({ config });
 
-generator.generate();
+generator.run();
