@@ -260,9 +260,12 @@ function Footer() {
       </div>
 
       <div className="border-t border-[var(--cream)]/10">
-        <p className="max-w-6xl mx-auto px-4 sm:px-6 py-5 text-xs text-[var(--cream)]/50 text-center">
-          © {new Date().getFullYear()} Amor de Mãe Fábia · Feito com carinho
-        </p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--cream)]/50">
+          <p>© {new Date().getFullYear()} Amor de Mãe Fábia · Feito com carinho</p>
+          <a href="/admin" className="hover:text-[var(--cream)] transition-colors">
+            Área da Fábia — editar cardápio
+          </a>
+        </div>
       </div>
     </footer>
   );
