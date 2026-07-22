@@ -120,10 +120,7 @@ function AdminPage() {
         toast.success("Produto adicionado!");
       }
       setIsOpen(false);
-      supabase
-        .from("products")
-        .select("id", { count: "exact", head: true })
-        .then(() => Route.useLoaderData); // no-op to satisfy lint
+      invalidateProducts();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Erro ao salvar produto");
     } finally {
@@ -136,6 +133,7 @@ function AdminPage() {
     try {
       await deleteFn({ data: { id } });
       toast.success("Produto removido!");
+      invalidateProducts();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Erro ao remover produto");
     } finally {
