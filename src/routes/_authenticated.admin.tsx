@@ -58,6 +58,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 function AdminPage() {
   const { data: products } = useSuspenseQuery(adminProductsQuery);
+  const queryClient = useQueryClient();
   const [editing, setEditing] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState<Partial<Product>>({
@@ -74,6 +75,11 @@ function AdminPage() {
   const createFn = useServerFn(createProduct);
   const updateFn = useServerFn(updateProduct);
   const deleteFn = useServerFn(deleteProduct);
+
+  const invalidateProducts = () => {
+    queryClient.invalidateQueries({ queryKey: ["admin-products"] });
+    queryClient.invalidateQueries({ queryKey: ["products"] });
+  };
 
   const openNew = () => {
     setEditing(null);
