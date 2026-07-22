@@ -142,6 +142,7 @@ function AdminPage() {
   };
 
   const handleSignOut = async () => {
+    localStorage.removeItem("temp_admin_bypass");
     await supabase.auth.signOut();
     window.location.href = "/";
   };
