@@ -13,6 +13,7 @@ import {
   Trash2,
   Eye,
   EyeOff,
+  Upload,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -71,6 +72,60 @@ function AdminPage() {
   });
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Por favor, selecione um arquivo de imagem válido.");
+      return;
+    }
+    setUploadingImage(true);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const MAX_DIM = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_DIM) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          }
+        } else {
+          if (height > MAX_DIM) {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          setForm((prev) => ({ ...prev, image_url: compressedDataUrl }));
+          toast.success("Foto carregada com sucesso!");
+        }
+        setUploadingImage(false);
+      };
+      img.onerror = () => {
+        toast.error("Erro ao processar a imagem.");
+        setUploadingImage(false);
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      toast.error("Erro ao ler o arquivo de imagem.");
+      setUploadingImage(false);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const createFn = useServerFn(createProduct);
   const updateFn = useServerFn(updateProduct);
@@ -312,14 +367,63 @@ function AdminPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="image_url">URL da imagem</Label>
-              <Input
-                id="image_url"
-                type="url"
-                value={form.image_url ?? ""}
-                onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                placeholder="https://..."
-              />
+              <Label>Foto do produto</Label>
+              {form.image_url ? (
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-border bg-muted">
+                  <img src={form.image_url} alt="Prévia do produto" className="w-full h-full object-cover" />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setForm({ ...form, image_url: "" })}
+                    className="absolute top-2 right-2 rounded-full h-8 px-3 text-xs shadow-md"
+                  >
+                    <Trash2 className="h-3.5 w-3.5 mr-1" /> Remover foto
+                  </Button>
+                </div>
+              ) : (
+                <label
+                  htmlFor="file-upload-input"
+                  className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-border hover:border-[var(--chocolate)]/50 rounded-2xl cursor-pointer bg-muted/30 hover:bg-muted/60 transition-colors text-center"
+                >
+                  {uploadingImage ? (
+                    <Loader2 className="h-6 w-6 animate-spin text-[var(--chocolate)]" />
+                  ) : (
+                    <>
+                      <div className="p-3 rounded-full bg-[var(--rose-soft)]/20 text-[var(--chocolate)]">
+                        <Upload className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-[var(--chocolate)]">
+                          Escolher foto no celular ou PC
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Tire uma foto ou escolha da galeria (PNG, JPG)
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  <input
+                    id="file-upload-input"
+                    type="file"
+                    accept="image/*"
+                    disabled={uploadingImage}
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
+              )}
+              <details className="text-xs text-muted-foreground mt-1 cursor-pointer">
+                <summary className="hover:text-[var(--chocolate)] transition-colors">Ou cole a URL da imagem manualmente</summary>
+                <Input
+                  id="image_url"
+                  type="url"
+                  value={form.image_url ?? ""}
+                  onChange={(e) => setForm({ ...form, image_url: e.target.value })}
+                  placeholder="https://..."
+                  className="mt-2 text-xs"
+                />
+              </details>
             </div>
             <div className="flex items-center justify-between rounded-xl border border-border p-3">
               <div className="flex items-center gap-2">
