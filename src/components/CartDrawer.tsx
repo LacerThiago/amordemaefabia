@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCart, formatBRL } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
 
-const WHATSAPP_NUMBER = "5581985051950"; // Fábia
+const WHATSAPP_NUMBER = "558198505195"; // Fábia
 
 export function CartDrawer() {
   const {

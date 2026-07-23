@@ -11,10 +11,10 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Acesso da Confeitaria — Amor de Mãe Fábia" },
+      { title: "Acesso da Confeitaria — Fábia Bolos" },
       {
         name: "description",
-        content: "Área restrita para gerenciar o cardápio da Amor de Mãe Fábia.",
+        content: "Área restrita para gerenciar o cardápio da Fábia Bolos.",
       },
     ],
   }),
@@ -57,7 +57,7 @@ function AuthPage() {
     <div className="min-h-screen bg-[var(--cream)] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-card border border-border rounded-3xl shadow-xl p-6 sm:p-8">
         <div className="flex flex-col items-center text-center mb-8">
-          <img src="/logo.png" alt="Amor de Mãe Fábia" className="h-20 w-auto object-contain rounded-2xl mb-3 shadow-sm" />
+          <img src="/logo.png" alt="Fábia Bolos" className="h-20 w-auto object-contain rounded-2xl mb-3 shadow-sm" />
           <h1 className="font-display text-2xl text-[var(--chocolate)]">Área da confeitaria</h1>
           <p className="mt-1 text-sm text-muted-foreground">Acesso exclusivo para editar o cardápio.</p>
         </div>

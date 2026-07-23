@@ -79,9 +79,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Amor de Mãe Fábia — Confeitaria Artesanal" },
-      { property: "og:title", content: "Amor de Mãe Fábia — Confeitaria Artesanal" },
-      { name: "twitter:title", content: "Amor de Mãe Fábia — Confeitaria Artesanal" },
+      { title: "Fábia Bolos — Confeitaria Artesanal" },
+      { property: "og:title", content: "Fábia Bolos — Confeitaria Artesanal" },
+      { name: "twitter:title", content: "Fábia Bolos — Confeitaria Artesanal" },
       { name: "description", content: "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia." },
       { property: "og:description", content: "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia." },
       { name: "twitter:description", content: "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia." },

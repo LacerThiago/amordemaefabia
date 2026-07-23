@@ -27,16 +27,16 @@ const productsQuery = queryOptions({
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Amor de Mãe Fábia — Confeitaria Artesanal" },
+      { title: "Fábia Bolos — Confeitaria Artesanal" },
       {
         name: "description",
         content:
-          "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia.",
+          "Bolos recheados e bolos caseiros feitos com carinho, sabor e afeto em cada fatia.",
       },
-      { property: "og:title", content: "Amor de Mãe Fábia — Confeitaria Artesanal" },
+      { property: "og:title", content: "Fábia Bolos — Confeitaria Artesanal" },
       {
         property: "og:description",
-        content: "Bolos recheados e bolos caseiros feitos com carinho sabor e afeto em cada fatia.",
+        content: "Bolos recheados e bolos caseiros feitos com carinho, sabor e afeto em cada fatia.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -140,7 +140,7 @@ function Header() {
         <a href="#" className="flex items-center gap-2">
           <Heart className="h-5 w-5 text-[var(--rose-soft)] fill-[var(--rose-soft)]" />
           <span className="font-display text-lg text-[var(--chocolate)] leading-none">
-            Amor de Mãe <span className="italic">Fábia</span>
+            Fábia <span className="italic">Bolos</span>
           </span>
         </a>
         <Button
@@ -172,9 +172,9 @@ function Hero() {
               Confeitaria artesanal
             </span>
             <h1 className="mt-4 font-display text-5xl sm:text-6xl lg:text-7xl text-[var(--chocolate)] leading-[1.02]">
-              Amor de Mãe
+              Fábia
               <br />
-              <span className="italic text-[var(--rose-soft)]">Fábia</span>
+              <span className="italic text-[var(--rose-soft)]">Bolos</span>
             </h1>
             <p className="mt-5 text-lg text-[var(--chocolate)]/80 font-display italic">
               Sabor e afeto em cada fatia.
@@ -228,7 +228,7 @@ function Footer() {
         <div>
           <div className="flex items-center gap-2">
             <Heart className="h-5 w-5 fill-[var(--rose-soft)] text-[var(--rose-soft)]" />
-            <span className="font-display text-xl">Amor de Mãe Fábia</span>
+            <span className="font-display text-xl">Fábia Bolos</span>
           </div>
           <p className="mt-3 text-sm text-[var(--cream)]/70 leading-relaxed">
             Sabor e afeto em cada fatia. Bolos e doces artesanais feitos com o carinho de casa.
@@ -238,12 +238,12 @@ function Footer() {
         <div>
           <h4 className="font-display text-lg text-[var(--cream)]">Contato</h4>
           <a
-            href="https://wa.me/5581985051950"
+            href="https://wa.me/558198505195"
             target="_blank"
             rel="noreferrer"
             className="mt-3 flex items-center gap-2 text-sm text-[var(--cream)]/80 hover:text-[var(--cream)]"
           >
-            <Phone className="h-4 w-4" /> (81) 98505-1950
+            <Phone className="h-4 w-4" /> (81) 9850-5195
           </a>
           <p className="mt-2 text-xs text-[var(--cream)]/60">
             Encomendas: no mínimo 24h de antecedência
@@ -261,7 +261,7 @@ function Footer() {
 
       <div className="border-t border-[var(--cream)]/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--cream)]/50">
-          <p>© {new Date().getFullYear()} Amor de Mãe Fábia · Feito com carinho</p>
+          <p>© {new Date().getFullYear()} Fábia Bolos · Feito com carinho</p>
           <a href="/admin" className="opacity-0 hover:opacity-30 transition-opacity" aria-label="Admin">
             ♥
           </a>
